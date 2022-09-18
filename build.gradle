@@ -8,6 +8,9 @@ plugins {
 group = 'de.skycave'
 version = '1.0.0'
 
+def localProperties = new Properties()
+localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+
 repositories {
     mavenCentral()
     maven {
@@ -74,8 +77,8 @@ publishing {
             name = "GitHubPackages"
             url = "https://maven.pkg.github.com/skycavemc/skycavelib"
             credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("ACCESS_TOKEN")
+                username = localProperties.getProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+                password = localProperties.getProperty("gpr.token") ?: System.getenv("ACCESS_TOKEN")
             }
         }
     }
