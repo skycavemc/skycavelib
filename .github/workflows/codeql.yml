@@ -66,6 +66,7 @@ jobs:
 
     - run: |
        echo "Run, Build Application using script"
+       touch local.properties
        chmod +x gradlew
        ./gradlew build
 
