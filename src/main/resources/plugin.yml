@@ -1,0 +1,6 @@
+name: SkyCaveLibrary
+version: '${version}'
+main: de.skycave.skycavelib.SkyCaveLib
+api-version: 1.19
+load: STARTUP
+authors: [ Hakuyamu ]
