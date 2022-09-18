@@ -10,7 +10,7 @@ For using  or publishing this library, you need a personal access token with acc
 In order for the package publishing to work, you need to set up a `local.properties` file:
 ```properties
 gpr.user=
-gpr.token=
+gpr.key=
 ```
 The rest is already configured in `build.gradle`.
 
