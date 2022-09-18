@@ -75,7 +75,7 @@ publishing {
             url = "https://maven.pkg.github.com/skycave/skycavelib"
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
+                password = System.getenv("ACCESS_TOKEN")
             }
         }
     }
