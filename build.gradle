@@ -28,6 +28,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.7.10'
     compileOnly 'io.papermc.paper:paper-api:1.19.2-R0.1-SNAPSHOT'
     implementation 'org.mongodb:mongodb-driver-sync:4.7.1'
     implementation 'com.google.code.gson:gson:2.9.1'
