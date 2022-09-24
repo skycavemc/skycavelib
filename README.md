@@ -36,7 +36,7 @@ The rest is already configured in `build.gradle`.
 - Finally, you can add the dependency (_don't forget to replace `VERSION` with your desired version_):
   ```groovy
   dependencies {
-       implementation("de.skycave.skycavelib:skycavelib:VERSION")
+       implementation("de.skycave:skycavelib:VERSION")
   }
   ```
 
