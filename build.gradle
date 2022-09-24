@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'de.skycave'
-version = '1.0.1'
+version = '1.0.2'
 
 def localProperties = new Properties()
 localProperties.load(new FileInputStream(rootProject.file("local.properties")))
