@@ -120,8 +120,7 @@ public class MessageRegistry {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .create();
-        try {
-            FileReader reader = new FileReader(registry);
+        try (FileReader reader = new FileReader(registry)) {
             Type mapType = new TypeToken<Map<String, String>>(){}.getType();
             Map<String, String> result = gson.fromJson(reader, mapType);
             messages.putAll(result);
@@ -154,8 +153,7 @@ public class MessageRegistry {
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .create();
-        try {
-            FileWriter writer = new FileWriter(registry);
+        try (FileWriter writer = new FileWriter(registry)) {
             String jsonResult = gson.toJson(messages);
             writer.write(jsonResult);
             writer.flush();

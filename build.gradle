@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'de.skycave'
-version = '1.0.0'
+version = '1.0.1'
 
 def localProperties = new Properties()
 localProperties.load(new FileInputStream(rootProject.file("local.properties")))
@@ -44,6 +44,9 @@ java {
     if (JavaVersion.current() < javaVersion) {
         toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
     }
+    manifest {
+        attributes 'Main-Class': "de.skycave.skycavelib.SkyCaveLib"
+    }
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -68,7 +71,6 @@ build {
 
 shadowJar {
     archiveFileName.set("${project.name}-${project.version}.jar")
-    mergeServiceFiles()
 }
 
 publishing {
