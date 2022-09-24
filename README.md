@@ -1,6 +1,6 @@
 ![GitHub release (latest by date including pre-releases)](https://img.shields.io/github/v/release/skycavemc/skycavelib?include_prereleases&style=plastic)
 ![GitHub license](https://img.shields.io/github/license/skycavemc/skycavelib?style=plastic)
-[![Publish package](https://github.com/skycavemc/skycavelib/actions/workflows/gradle_package.yml/badge.svg)](https://github.com/skycavemc/skycavelib/actions/workflows/gradle_package.yml)
+[![](https://jitpack.io/v/skycavemc/skycavelib.svg)](https://jitpack.io/#skycavemc/skycavelib)
 [![CodeQL](https://github.com/skycavemc/skycavelib/actions/workflows/codeql.yml/badge.svg)](https://github.com/skycavemc/skycavelib/actions/workflows/codeql.yml)
 # skycavelib
 Library for SkyCave plugins.
