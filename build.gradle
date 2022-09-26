@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'de.skycave'
-version = '1.0.2'
+version = '1.0.3'
 
 def localProperties = new Properties()
 localProperties.load(new FileInputStream(rootProject.file("local.properties")))
@@ -66,12 +66,8 @@ processResources {
     }
 }
 
-build {
-    dependsOn(shadowJar)
-}
-
 shadowJar {
-    archiveFileName.set("${project.name}-${project.version}.jar")
+    archiveFileName.set("${project.name}-${project.version}-FAT.jar")
 }
 
 publishing {
