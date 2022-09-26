@@ -49,13 +49,27 @@ public class MessageRegistry {
         Pattern pattern = Pattern.compile("^(?!-)([a-z0-9\\-]+)(?<!-)$"); // example: test-str1ng-98-abc
         Matcher matcher = pattern.matcher(key);
         if (!matcher.matches()) {
-            throw new IllegalArgumentException("Key does not match pattern.");
+            throw new IllegalArgumentException("Key " + key + " does not match pattern.");
         }
         if (messages.containsKey(key)) {
             return false;
         }
         messages.put(key, message);
         save();
+        return true;
+    }
+
+    /**
+     * Registers the new messages and saves them. Use update if you want to change one of the messages' text later.
+     * The key may only contain lowercase letters and numbers separated by dashes (-). This is to maintain consistency.
+     * @param messages A map of messages to register
+     * @throws IllegalArgumentException if the key does not match the pattern
+     * @return true - if the message was registered, false - if the message already exists
+     */
+    public boolean registerMany(@NotNull Map<String, String> messages) {
+        for (Map.Entry<String, String> entry : messages.entrySet()) {
+            if (!register(entry.getKey(), entry.getValue())) return false;
+        }
         return true;
     }
 
