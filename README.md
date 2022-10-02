@@ -38,5 +38,3 @@ The rest is already configured in `build.gradle`.
        implementation("de.skycave:skycavelib:VERSION")
   }
   ```
-
-
