@@ -3,16 +3,19 @@ package de.skycave.skycavelib.models;
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
 import de.skycave.skycavelib.annotations.CreateDataFolder;
+import de.skycave.skycavelib.annotations.InjectService;
 import de.skycave.skycavelib.annotations.Prefix;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.event.Listener;
+import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.net.URL;
 
 @SuppressWarnings("unused")
@@ -33,8 +36,31 @@ public abstract class SkyCavePlugin extends JavaPlugin {
                 getDataFolder().mkdirs();
             }
         }
+
         if (clazz.isAnnotationPresent(Prefix.class)) {
             prefix = clazz.getAnnotation(Prefix.class).value();
+        }
+
+        for (Field field : clazz.getFields()) {
+            if (field.isAnnotationPresent(InjectService.class)) {
+                Class<?> fieldClass = field.getDeclaringClass();
+                RegisteredServiceProvider<?> provider = getServer().getServicesManager()
+                        .getRegistration(fieldClass);
+
+                if (provider == null) {
+                    getServer().getLogger().severe("No registered service found for class "
+                            + fieldClass.getName());
+                    getServer().getPluginManager().disablePlugin(this);
+                    continue;
+                }
+
+                field.setAccessible(true);
+                try {
+                    field.set(SkyCavePlugin.this, provider.getProvider());
+                } catch (IllegalAccessException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
