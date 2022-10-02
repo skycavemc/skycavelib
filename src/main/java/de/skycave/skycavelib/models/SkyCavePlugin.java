@@ -5,6 +5,7 @@ import com.google.common.io.Resources;
 import de.skycave.skycavelib.annotations.CreateDataFolder;
 import de.skycave.skycavelib.annotations.InjectService;
 import de.skycave.skycavelib.annotations.Prefix;
+import de.skycave.skycavelib.exceptions.ServiceNotFoundException;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
@@ -41,24 +42,23 @@ public abstract class SkyCavePlugin extends JavaPlugin {
             prefix = clazz.getAnnotation(Prefix.class).value();
         }
 
-        for (Field field : clazz.getFields()) {
+        for (Field field : clazz.getDeclaredFields()) {
             if (field.isAnnotationPresent(InjectService.class)) {
-                Class<?> fieldClass = field.getDeclaringClass();
+                Class<?> fieldClass = field.getType();
                 RegisteredServiceProvider<?> provider = getServer().getServicesManager()
                         .getRegistration(fieldClass);
 
                 if (provider == null) {
-                    getServer().getLogger().severe("No registered service found for class "
-                            + fieldClass.getName());
+                    getLogger().severe("No registered service found for class " + fieldClass.getName());
                     getServer().getPluginManager().disablePlugin(this);
-                    continue;
+                    throw new ServiceNotFoundException();
                 }
 
                 field.setAccessible(true);
                 try {
                     field.set(SkyCavePlugin.this, provider.getProvider());
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    throw new RuntimeException(e.getMessage());
                 }
             }
         }
