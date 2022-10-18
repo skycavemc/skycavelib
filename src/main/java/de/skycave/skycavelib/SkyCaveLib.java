@@ -1,16 +1,16 @@
 package de.skycave.skycavelib;
 
-import org.bukkit.plugin.java.JavaPlugin;
+import de.skycave.skycavelib.models.SkyCavePlugin;
 
-public final class SkyCaveLib extends JavaPlugin {
+public final class SkyCaveLib extends SkyCavePlugin {
 
     @Override
     public void onEnable() {
-        // Plugin startup logic
+        super.onEnable();
     }
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        super.onDisable();
     }
 }

@@ -2,6 +2,9 @@ package de.skycave.skycavelib.models;
 
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
+import com.rollbar.notifier.Rollbar;
+import com.rollbar.notifier.config.Config;
+import com.rollbar.notifier.config.ConfigBuilder;
 import de.skycave.skycavelib.annotations.CreateDataFolder;
 import de.skycave.skycavelib.annotations.InjectService;
 import de.skycave.skycavelib.annotations.Prefix;
@@ -23,13 +26,24 @@ import java.net.URL;
 public abstract class SkyCavePlugin extends JavaPlugin {
 
     private String prefix = "";
+    private Rollbar rollbar;
 
     public String getPrefix() {
         return prefix;
     }
 
+    public Rollbar getRollbar() {
+        return rollbar;
+    }
+
     @Override
     public void onEnable() {
+        Config config = ConfigBuilder.withAccessToken("e8666eaa4a2d4cbeb40bd6695e8b7151")
+                .environment("production")
+                .codeVersion("1.3.0")
+                .build();
+        this.rollbar = Rollbar.init(config);
+
         Class<? extends SkyCavePlugin> clazz = SkyCavePlugin.this.getClass();
         if (clazz.isAnnotationPresent(CreateDataFolder.class)) {
             if (!getDataFolder().isDirectory()) {
@@ -101,4 +115,12 @@ public abstract class SkyCavePlugin extends JavaPlugin {
         return false;
     }
 
+    @Override
+    public void onDisable() {
+        try {
+            rollbar.close(true);
+        } catch (Exception e) {
+            rollbar.error(e);
+        }
+    }
 }
