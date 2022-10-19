@@ -17,8 +17,11 @@ The rest is already configured in `build.gradle`.
 - Create a `local.properties` file as explained above.
 - First, you have to read the properties from `local.properties` in your `build.gradle` file:
   ```groovy
-  def localProperties = new Properties()
-  localProperties.load(new FileInputStream(rootProject.file("local.properties")))
+  import java.util.Properties
+  import java.io.FileInputStream
+  
+  val localProperties = new Properties()
+  localProperties.load(FileInputStream(rootProject.file("local.properties")))
   ```
 - Now you can add the repository as follows:
   ```groovy
